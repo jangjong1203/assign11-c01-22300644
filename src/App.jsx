@@ -13,7 +13,7 @@ export default function App() {
         </div>
         <span className="tag">STUDENT STARTER</span>
       </header>
-      {/* 리스트 */}
+      {/* 리스트를 렌더링 */}
       <CourseList />
       {/* 밑부분 */}
       <footer className="bottom">

@@ -7,7 +7,7 @@ export default function CourseItem({ course, onDelete, onToggle }) {
         <input
           className="check"
           type="checkbox"
-          //리스트의 onToggle 값으로 완료 여부를 판단
+          //onToggle로 클릭시 완료로변경
           checked={course.completed}
           onChange={() => onToggle(course.id)}
           aria-label={`${course.name} 완료 여부`}
@@ -17,7 +17,7 @@ export default function CourseItem({ course, onDelete, onToggle }) {
           <div className={`course-title ${course.completed ? "done" : ""}`}>
             {course.name}
           </div>
-          {/* id, 카테고리, 삭제 버튼 요소 리스트에서 가져오기 */}
+          {/* id, 카테고리, 삭제 버튼 요소 CourseList에서 받은 객체에서 꺼내서 출력 */}
           <div className="course-id">Course #{course.id}</div>
         </div>
       </div>
