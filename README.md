@@ -7,7 +7,6 @@ Installation: 설치·실행 방법 및 실행 화면
     npm install
     npm run dev
     후 나오는 주소로 접속.
-    
 
 
 Source Code Exploration: 주요 파일 3개, Component와 Props 관계, useState 및 Event 분석, 주요 코드 2개 설명
@@ -41,7 +40,11 @@ Source Code Exploration: 주요 파일 3개, Component와 Props 관계, useState
 
 
 
-Customizing: 수정한 데이터, 텍스트, 스타일 및 파일명
+Customizing: 
+
+    데이터는 courses.js 파일에서 과목 이름들을 한글로 바꾸고 일부 과목 true/false상태를 변경하고 이산수학을 추가하였습니다.
+    텍스트는 App.jsx 파일에서 상단 부분 텍스트와 하단 부분텍스트를 변경하였습니다. 추가로 CourseList.jsx 파일에서 "실습과제:... "부분을 제거하였습니다. 
+    스타일은 App.css파일에서 .root의 배경색과 .subtitle의 글자색을 변경했습니다. delete버튼의 배경과 글자색도 변경했습니다.
 
 
 
