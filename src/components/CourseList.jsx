@@ -7,6 +7,10 @@ export default function CourseList() {
   const [courses, setCourses] = useState(initialCourses);
   const [newName, setNewName] = useState("");
 
+
+  // 초기배열 길이 + 1 로 추가할데이터의 ID값 생성.
+  const [nextId, setNextId] = useState(initialCourses.length + 1);
+
   // [제공] 삭제 기능: filter로 새 배열을 만들어 업데이트합니다.
   function handleDelete(id) {
     if (!window.confirm("이 과목을 삭제하시겠습니까?")) return;
@@ -15,8 +19,27 @@ export default function CourseList() {
 
   // TODO 1 (필수): 과목 추가 기능을 구현하세요.
   function handleAdd(event) {
+    //폼 제출시 새로고침 방지
     event.preventDefault();
     // TODO: 빈 입력 검사, 새 과목 객체 생성, setCourses 호출, 입력창 초기화
+    //빈칸 입력 방지
+    if(newName.trim()==''){
+      alert('과목명을 입력하시오');
+      return;
+    }
+    //새로운 과목 객체 생성
+    const newCourse={
+      id:nextId,
+      name:newName,
+      category:'major',
+      completed:false
+    };
+    //기존 배열들 뒤에 새로운 배열을 추가
+    setCourses(previous => [...previous, newCourse]);
+    //다음 배열을 위해 Id값 관리
+    setNextId(nextId + 1);
+    //입력창 비우기
+    setNewName('');
   }
 
   // TODO 2 (필수): 완료 상태 변경 기능을 구현하세요.
