@@ -45,6 +45,19 @@ export default function CourseList() {
   // TODO 2 (필수): 완료 상태 변경 기능을 구현하세요.
   function handleToggle(id) {
     // TODO: map과 spread(...)를 사용하여 해당 id의 completed를 반전
+    //배열을 수정
+    setCourses(
+      //배열에 든 과목을 하나식 끝까지 꺼내서 확인
+      courses.map(course => {
+        //완료버튼을 누른 과목이 나오면
+        if (course.id === id) {
+          //이전 과목들은 그대로 유지후 해당 과목의 완료 상태만 반전시킴 (true는 false로, false 는 true로)
+          return {...course,completed:!course.completed};
+        }
+        // 해당과목의 완료상태만 변경된 배열을 반환해서 수정함.
+        return course;
+      })
+    );
   }
 
   const doneCount = courses.filter((course) => course.completed).length;
