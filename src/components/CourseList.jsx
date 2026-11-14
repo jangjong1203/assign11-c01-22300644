@@ -7,7 +7,6 @@ export default function CourseList() {
   const [courses, setCourses] = useState(initialCourses);
   const [newName, setNewName] = useState("");
 
-
   // 초기배열 길이 + 1 로 추가할데이터의 ID값 생성.
   const [nextId, setNextId] = useState(initialCourses.length + 1);
 
@@ -23,23 +22,23 @@ export default function CourseList() {
     event.preventDefault();
     // TODO: 빈 입력 검사, 새 과목 객체 생성, setCourses 호출, 입력창 초기화
     //빈칸 입력 방지
-    if(newName.trim()==''){
-      alert('과목명을 입력하시오');
+    if (newName.trim() == "") {
+      alert("과목명을 입력하시오");
       return;
     }
     //새로운 과목 객체 생성
-    const newCourse={
-      id:nextId,
-      name:newName,
-      category:'major',
-      completed:false
+    const newCourse = {
+      id: nextId,
+      name: newName,
+      category: "major",
+      completed: false,
     };
     //기존 배열들 뒤에 새로운 배열을 추가
-    setCourses(previous => [...previous, newCourse]);
+    setCourses((previous) => [...previous, newCourse]);
     //다음 배열을 위해 Id값 관리
     setNextId(nextId + 1);
     //입력창 비우기
-    setNewName('');
+    setNewName("");
   }
 
   // TODO 2 (필수): 완료 상태 변경 기능을 구현하세요.
@@ -48,23 +47,39 @@ export default function CourseList() {
     //배열을 수정
     setCourses(
       //배열에 든 과목을 하나식 끝까지 꺼내서 확인
-      courses.map(course => {
+      courses.map((course) => {
         //완료버튼을 누른 과목이 나오면
         if (course.id === id) {
           //이전 과목들은 그대로 유지후 해당 과목의 완료 상태만 반전시킴 (true는 false로, false 는 true로)
-          return {...course,completed:!course.completed};
+          return { ...course, completed: !course.completed };
         }
         // 해당과목의 완료상태만 변경된 배열을 반환해서 수정함.
         return course;
-      })
+      }),
     );
   }
+
+  //필터 관리 기본값은 ALL
+  const [filter, setFilter] = useState("all");
+
+  const filterCourses = courses.filter((course) => {
+    //완료상태면 true
+    if (filter === "completed") {
+      return course.completed === true;
+    }
+    //진행중이면 false
+    if (filter === "active") {
+      return course.completed === false;
+    }
+    //all 이면 전부 true
+    return true;
+  });
 
   const doneCount = courses.filter((course) => course.completed).length;
 
   return (
     <>
-    {/* 전체 과목, 체크된 과목, 체크 안된과목 각각 개수를 계산해서 화면에 출력 */}
+      {/* 전체 과목, 체크된 과목, 체크 안된과목 각각 개수를 계산해서 화면에 출력 */}
       <section className="stats" aria-label="과목 통계">
         <div className="stat">
           <span>전체 과목</span>
@@ -95,11 +110,24 @@ export default function CourseList() {
             placeholder="새 과목명을 입력하세요"
             aria-label="새 과목명"
           />
-          {/*만든 add버튼 함수를사용해서 과목을 추가하는 기능 구현*/} 
+          {/*만든 add버튼 함수를사용해서 과목을 추가하는 기능 구현*/}
           <button className="btn primary" type="submit">
             + Add Course
           </button>
         </form>
+        {/*어떤 상태의 과목들을 볼지 고르는 select 추가 */}
+        <div className="filter">
+          {/* 새로운 값이 선택 되면 가져와서 필터를 수정 */} 
+          <select
+            className="input select"
+            onChange={(event) => setFilter(event.target.value)}
+          >
+            <option value="all">전체</option>
+            <option value="active">진행중</option>
+            <option value="completed">완료</option>
+          </select>
+        </div>
+
         {/*리스트 머리 출력 */}
         <div className="list-head">
           <span>COURSE</span>
@@ -109,8 +137,8 @@ export default function CourseList() {
         {courses.length === 0 && (
           <div className="empty">등록된 과목이 없습니다.</div>
         )}
-        {/* 리스트 내용 출력 */}
-        {courses.map((course) => (
+        {/* 리스트 내용 출력 => step4 필터 기능 추가로 필터된 리스트 내용 출력으로 변경*/}
+        {filterCourses.map((course) => (
           <CourseItem
             key={course.id}
             course={course}
